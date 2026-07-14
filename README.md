@@ -105,6 +105,26 @@ properties = scrape_property(
 )
 ```
 
+### Nationwide Scraping
+
+This fork includes [`examples/scrape_us_nationwide.py`](examples/scrape_us_nationwide.py), a resumable bulk scraper that sweeps every US zip code (Realtor.com caps each search at 10,000 results, so a national pull must go zip-by-zip):
+
+```bash
+# Scrape all for-sale listings in the US (checkpointed — rerun to resume)
+python examples/scrape_us_nationwide.py scrape --output data_us
+
+# Restrict to certain states / listing types
+python examples/scrape_us_nationwide.py scrape --states AZ,CA --listing-types for_sale,sold --output data_us
+
+# Merge everything into one deduplicated parquet/csv
+python examples/scrape_us_nationwide.py combine --output data_us --csv
+
+# Check progress
+python examples/scrape_us_nationwide.py status --output data_us
+```
+
+Zips that hit the 10,000-result cap are automatically re-fetched in price bands so no listings are dropped. A full national sweep takes a few days at the default 1 request/second — use `--states` to shard the job, and `--proxy` if you hit 403s.
+
 ## Output
 ```plaintext
 >>> properties.head()

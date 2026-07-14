@@ -1,7 +1,7 @@
-/.idea
-**/dist/
-**/__pycache__/
-**/.pytest_cache/
-*.pyc
-/.ipynb_checkpoints/
-*.csv
+__pycache__/
+*.py[cod]
+.venv/
+data_us/
+data_test/
+dist/
+.DS_Store
